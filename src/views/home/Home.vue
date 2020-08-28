@@ -11,11 +11,23 @@
 
 <script>
 import NavBar from "@/components/common/navbar/NavBar";
+import {getHomeMultiData} from "@/network/home-requet";
 
 export default {
   name: "Home",
+  data() {
+    return {
+      data: null,
+    }
+  },
   components: {
     NavBar
+  },
+  created() {
+    getHomeMultiData().then(result => {
+      this.data = result.data;
+      console.log(this.data);
+    })
   }
 }
 </script>
