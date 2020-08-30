@@ -4,6 +4,7 @@
     <NavBar class="home-nav">
       <div slot="center">购物中心</div>
     </NavBar>
+    <recommend-view :recommends="data.recommend.list"></recommend-view>
   </div>
 
 
@@ -11,6 +12,7 @@
 
 <script>
 import NavBar from "@/components/common/navbar/NavBar";
+import RecommendView from "@/views/home/homecompoents/RecommendView";
 import {getHomeMultiData} from "@/network/home-requet";
 
 export default {
@@ -21,7 +23,7 @@ export default {
     }
   },
   components: {
-    NavBar
+    NavBar,RecommendView,
   },
   created() {
     getHomeMultiData().then(result => {
