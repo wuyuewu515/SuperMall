@@ -1,10 +1,11 @@
 <template>
   <div id="home">
 
-    <NavBar class="home-nav">
+    <nav-bar class="home-nav">
       <div slot="center">购物中心</div>
-    </NavBar>
-    <recommend-view :recommends="data.recommend.list"></recommend-view>
+    </nav-bar>
+    <recommend-view :recommends="recommends"></recommend-view>
+    <feature-view></feature-view>
   </div>
 
 
@@ -13,6 +14,7 @@
 <script>
 import NavBar from "@/components/common/navbar/NavBar";
 import RecommendView from "@/views/home/homecompoents/RecommendView";
+import FeatureView from "@/views/home/homecompoents/FeatureView";
 import {getHomeMultiData} from "@/network/home-requet";
 
 export default {
@@ -20,14 +22,16 @@ export default {
   data() {
     return {
       data: null,
+      recommends:[]
     }
   },
   components: {
-    NavBar,RecommendView,
+    NavBar,RecommendView,FeatureView
   },
   created() {
     getHomeMultiData().then(result => {
       this.data = result.data;
+      this.recommends = result.data.recommend.list;
       console.log(this.data);
     })
   }
@@ -35,7 +39,16 @@ export default {
 </script>
 
 <style scoped>
+#home{
+  padding-top: 44px;
+  padding-bottom: 49px;
+}
 .home-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
   background: var(--color-tint);
   color: white;
 }
