@@ -1,0 +1,28 @@
+
+//获取构建首页商品数据
+export function homeGoodsData(type) {
+  let imgUlr = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598852177527&di=c499df3133dfac5f6c916020bcf81956&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201105%2F17%2F113554rnu40q7nbgnn3lgq.jpg';
+  if (type === 'pop') {
+    imgUlr = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598852177527&di=c499df3133dfac5f6c916020bcf81956&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201105%2F17%2F113554rnu40q7nbgnn3lgq.jpg';
+  } else if (type === 'news') {
+    imgUlr = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598852288893&di=309b2d5f8d49d0ab114a5f3a4a6a90aa&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201503%2F11%2F20150311075933_kxwYr.jpeg';
+  } else if (type === 'sell') {
+    imgUlr = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598852319084&di=40f68fafdf0bc9d49d3cce82fa1975ae&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn10113%2F505%2Fw580h725%2F20190628%2Fc9e2-hyzpvir8533150.jpg';
+  }
+  let dataList = []
+  for (let i = 0; i < 30; i++) {
+    let tempData = {
+      imga: imgUlr,
+      price:'￥:10'+i,
+      collect:'20'+i,
+      title: '这个标题内容'+type + '--' + i,
+    }
+    dataList.push(tempData)
+  }
+  return new Promise(resolve => {
+    setTimeout(() => {
+        resolve(dataList);
+      },
+      1000)
+  })
+}

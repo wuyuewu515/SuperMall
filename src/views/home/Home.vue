@@ -6,6 +6,15 @@
     </nav-bar>
     <recommend-view :recommends="recommends"></recommend-view>
     <feature-view></feature-view>
+    <tabcontrol class="tab-control"
+                @tabClick = "tabClick"
+                :titles="['流行','新款','精选']"></tabcontrol>
+    <goods-list :list="goods[currentType].list"></goods-list>
+    <ul>
+      <li v-for="item in 100">
+        占位{{ item }}
+      </li>
+    </ul>
   </div>
 
 
@@ -13,28 +22,69 @@
 
 <script>
 import NavBar from "@/components/common/navbar/NavBar";
+import Tabcontrol from "@/components/common/tabcontrol/Tabcontrol";
+
 import RecommendView from "@/views/home/homecompoents/RecommendView";
 import FeatureView from "@/views/home/homecompoents/FeatureView";
-import {getHomeMultiData} from "@/network/home-requet";
+import GoodsList from "@/components/content/goods/GoodsList";
+
+import {getHomeGoodsData, getHomeMultiData} from "@/network/home-requet";
 
 export default {
   name: "Home",
   data() {
     return {
       data: null,
-      recommends:[]
+      recommends: [],
+      goods:{
+        pop:{indexPage:0,list:[]},
+        news:{indexPage:0,list:[]},
+        sell:{indexPage:0,list:[]},
+      },
+      currentType:'pop',
     }
   },
   components: {
-    NavBar,RecommendView,FeatureView
+    NavBar, Tabcontrol, RecommendView, FeatureView,GoodsList
   },
   created() {
-    getHomeMultiData().then(result => {
-      this.data = result.data;
-      this.recommends = result.data.recommend.list;
-      console.log(this.data);
-    })
+    this.getHomeMultiData();
+    this.getHomeGoodsData('pop');
+    this.getHomeGoodsData('news');
+    this.getHomeGoodsData('sell');
+  },
+  methods: {
+    tabClick(position){
+      switch (position) {
+      case 0:
+        this.currentType = 'pop';
+        break;
+      case 1:
+        this.currentType = 'news';
+        break;
+      case 2:
+        this.currentType = 'sell';
+        break;
+      }
+    },
+    //获取首页推荐数据
+    getHomeMultiData() {
+      getHomeMultiData().then(result => {
+        this.data = result.data;
+        this.recommends = result.data.recommend.list;
+        console.log(this.data);
+      })
+    },
+    //获取首页商品数据
+    getHomeGoodsData(type){
+      let pageIndex = this.goods[type].indexPage
+      getHomeGoodsData(type,pageIndex).then(result=>{
+        this.goods[type].list.push(...result)
+        this.goods[type].indexPage +=1
+      })
+    }
   }
+
 }
 </script>
 
@@ -43,6 +93,7 @@ export default {
   padding-top: 44px;
   padding-bottom: 49px;
 }
+
 .home-nav {
   position: fixed;
   top: 0;
@@ -51,5 +102,11 @@ export default {
   z-index: 9;
   background: var(--color-tint);
   color: white;
+}
+
+.tab-control {
+  position: sticky;
+  top: 44px;
+  z-index: 9;
 }
 </style>
