@@ -1,20 +1,17 @@
 <template>
-  <div id="home">
+  <div id="home" class="wrapper">
 
-    <nav-bar class="home-nav">
-      <div slot="center">购物中心</div>
-    </nav-bar>
-    <recommend-view :recommends="recommends"></recommend-view>
-    <feature-view></feature-view>
-    <tabcontrol class="tab-control"
-                @tabClick = "tabClick"
-                :titles="['流行','新款','精选']"></tabcontrol>
-    <goods-list :list="goods[currentType].list"></goods-list>
-    <ul>
-      <li v-for="item in 100">
-        占位{{ item }}
-      </li>
-    </ul>
+    <nav-bar class="home-nav"><div slot="center">购物中心</div></nav-bar>
+
+    <scroll-view class="content" ref="scrollView">
+      <recommend-view :recommends="recommends"></recommend-view>
+      <feature-view></feature-view>
+      <tabcontrol class="tab-control"
+                  @tabClick="tabClick"
+                  :titles="['流行','新款','精选']"></tabcontrol>
+      <goods-list :list="goods[currentType].list"></goods-list>
+    </scroll-view>
+
   </div>
 
 
@@ -24,6 +21,7 @@
 import NavBar from "@/components/common/navbar/NavBar";
 import Tabcontrol from "@/components/common/tabcontrol/Tabcontrol";
 
+import ScrollView from "@/components/common/scroll/ScrollView";
 import RecommendView from "@/views/home/homecompoents/RecommendView";
 import FeatureView from "@/views/home/homecompoents/FeatureView";
 import GoodsList from "@/components/content/goods/GoodsList";
@@ -45,7 +43,7 @@ export default {
     }
   },
   components: {
-    NavBar, Tabcontrol, RecommendView, FeatureView,GoodsList
+    NavBar, Tabcontrol, ScrollView, RecommendView, FeatureView, GoodsList
   },
   created() {
     this.getHomeMultiData();
@@ -81,6 +79,8 @@ export default {
       getHomeGoodsData(type,pageIndex).then(result=>{
         this.goods[type].list.push(...result)
         this.goods[type].indexPage +=1
+        //通知srollview刷新页面
+        this.$refs.scrollView.reflushSroll();
       })
     }
   }
@@ -88,10 +88,11 @@ export default {
 }
 </script>
 
+<!--scoped 只针对当前页面起作用-->
 <style scoped>
 #home{
-  padding-top: 44px;
-  padding-bottom: 49px;
+  height: 100vh;
+  position: relative;
 }
 
 .home-nav {
@@ -108,5 +109,15 @@ export default {
   position: sticky;
   top: 44px;
   z-index: 9;
+}
+
+
+.content{
+  overflow: hidden;
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
 }
 </style>

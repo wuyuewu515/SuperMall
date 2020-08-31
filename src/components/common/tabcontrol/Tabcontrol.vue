@@ -27,6 +27,8 @@ export default {
   },
   methods: {
     tablClik(position) {
+      if (this.currentIndex === position)
+        return;
       this.currentIndex = position;
       this.$emit('tabClick',position);
     }
