@@ -20,9 +20,6 @@ export function homeGoodsData(type) {
     dataList.push(tempData)
   }
   return new Promise(resolve => {
-    setTimeout(() => {
         resolve(dataList);
-      },
-      1000)
   })
 }

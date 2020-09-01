@@ -1,9 +1,16 @@
 <template>
   <div id="home" class="wrapper">
 
-    <nav-bar class="home-nav"><div slot="center">购物中心</div></nav-bar>
+    <nav-bar class="home-nav">
+      <div slot="center">购物中心</div>
+    </nav-bar>
 
-    <scroll-view class="content" ref="scrollView" :probe-type="3" @scroll="contentScroll">
+    <scroll-view class="content"
+                 ref="scrollView"
+                 :probe-type="3"
+                 :pull-up-load="true"
+                 @loadMore="loadMore"
+                 @scroll="contentScroll">
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
       <tabcontrol class="tab-control"
@@ -54,12 +61,18 @@ export default {
     this.getHomeGoodsData('news');
     this.getHomeGoodsData('sell');
   },
+  mounted() {
+    //$bus使用
+    // this.$bus.$on('itemImgLoad',()=>{
+    //   this.$refs.scrollView.reflushSroll();
+    // })
+  },
   methods: {
     tabClick(position){
       switch (position) {
-      case 0:
-        this.currentType = 'pop';
-        break;
+        case 0:
+          this.currentType = 'pop';
+          break;
         case 1:
           this.currentType = 'news';
           break;
@@ -67,12 +80,17 @@ export default {
           this.currentType = 'sell';
           break;
       }
+      this.$refs.scrollView.reflushSroll();
     },
     backTopClick() {
       this.$refs.scrollView.scrollTo(0, 0);
     },
     contentScroll(offsetY) {
       this.isShowBackTop = offsetY < (-1000);
+    },
+    loadMore() {
+      console.log('加载更多数据');
+      this.getHomeGoodsData(this.currentType)
     },
     //获取首页推荐数据
     getHomeMultiData() {
@@ -85,11 +103,11 @@ export default {
     //获取首页商品数据
     getHomeGoodsData(type) {
       let pageIndex = this.goods[type].indexPage
-      getHomeGoodsData(type,pageIndex).then(result=>{
+      getHomeGoodsData(type, pageIndex).then(result => {
         this.goods[type].list.push(...result)
-        this.goods[type].indexPage +=1
-        //通知srollview刷新页面
-        this.$refs.scrollView.reflushSroll();
+        this.goods[type].indexPage += 1
+        //结束加载更多
+        this.$refs.scrollView.finishPullUp();
       })
     }
   }
