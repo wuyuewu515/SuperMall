@@ -3,7 +3,7 @@
 
     <nav-bar class="home-nav"><div slot="center">购物中心</div></nav-bar>
 
-    <scroll-view class="content" ref="scrollView">
+    <scroll-view class="content" ref="scrollView" :probe-type="3" @scroll="contentScroll">
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
       <tabcontrol class="tab-control"
@@ -11,7 +11,7 @@
                   :titles="['流行','新款','精选']"></tabcontrol>
       <goods-list :list="goods[currentType].list"></goods-list>
     </scroll-view>
-
+    <back-top @click.native="backTopClick" v-show="isShowBackTop"/>
   </div>
 
 
@@ -25,6 +25,7 @@ import ScrollView from "@/components/common/scroll/ScrollView";
 import RecommendView from "@/views/home/homecompoents/RecommendView";
 import FeatureView from "@/views/home/homecompoents/FeatureView";
 import GoodsList from "@/components/content/goods/GoodsList";
+import BackTop from "@/components/content/backtop/BackTop";
 
 import {getHomeGoodsData, getHomeMultiData} from "@/network/home-requet";
 
@@ -34,16 +35,18 @@ export default {
     return {
       data: null,
       recommends: [],
-      goods:{
-        pop:{indexPage:0,list:[]},
-        news:{indexPage:0,list:[]},
-        sell:{indexPage:0,list:[]},
+      goods: {
+        pop: {indexPage: 0, list: []},
+        news: {indexPage: 0, list: []},
+        sell: {indexPage: 0, list: []},
       },
-      currentType:'pop',
+      currentType: 'pop',
+      isShowBackTop: false,
     }
   },
   components: {
-    NavBar, Tabcontrol, ScrollView, RecommendView, FeatureView, GoodsList
+    NavBar, Tabcontrol, ScrollView, RecommendView, FeatureView,
+    GoodsList, BackTop
   },
   created() {
     this.getHomeMultiData();
@@ -57,13 +60,19 @@ export default {
       case 0:
         this.currentType = 'pop';
         break;
-      case 1:
-        this.currentType = 'news';
-        break;
-      case 2:
-        this.currentType = 'sell';
-        break;
+        case 1:
+          this.currentType = 'news';
+          break;
+        case 2:
+          this.currentType = 'sell';
+          break;
       }
+    },
+    backTopClick() {
+      this.$refs.scrollView.scrollTo(0, 0);
+    },
+    contentScroll(offsetY) {
+      this.isShowBackTop = offsetY < (-1000);
     },
     //获取首页推荐数据
     getHomeMultiData() {
@@ -74,7 +83,7 @@ export default {
       })
     },
     //获取首页商品数据
-    getHomeGoodsData(type){
+    getHomeGoodsData(type) {
       let pageIndex = this.goods[type].indexPage
       getHomeGoodsData(type,pageIndex).then(result=>{
         this.goods[type].list.push(...result)

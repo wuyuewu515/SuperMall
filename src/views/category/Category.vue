@@ -1,6 +1,6 @@
 <template>
   <div id="category" class="wrapper">
-    <scroll-view class="content">
+    <scroll-view class="content" :probe-type="1">
       <ul >
         <li v-for="item in 100">
           占位{{ item }}
