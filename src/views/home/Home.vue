@@ -4,6 +4,11 @@
     <nav-bar class="home-nav">
       <div slot="center">购物中心</div>
     </nav-bar>
+    <!--  使用一个假的tabbar-->
+    <tabcontrol :class="{tab_control:showFakseTabControl}"
+                ref="tabControlFakse"
+                @tabClick="tabClick"
+                :titles="['流行','新款','精选']"></tabcontrol>
 
     <scroll-view class="content"
                  ref="scrollView"
@@ -13,7 +18,7 @@
                  @scroll="contentScroll">
       <recommend-view :recommends="recommends"></recommend-view>
       <feature-view></feature-view>
-      <tabcontrol class="tab-control"
+      <tabcontrol ref="tabControl"
                   @tabClick="tabClick"
                   :titles="['流行','新款','精选']"></tabcontrol>
       <goods-list :list="goods[currentType].list"></goods-list>
@@ -49,6 +54,8 @@ export default {
       },
       currentType: 'pop',
       isShowBackTop: false,
+      tabOffsetTop: 0,
+      showFakseTabControl: false,
     }
   },
   components: {
@@ -62,10 +69,15 @@ export default {
     this.getHomeGoodsData('sell');
   },
   mounted() {
+
     //$bus使用
-    // this.$bus.$on('itemImgLoad',()=>{
-    //   this.$refs.scrollView.reflushSroll();
-    // })
+    this.$bus.$once('imgLoad', (args) => {
+      //图片加载完成获取偏移量
+      if (this.$refs.tabControl.$el) {
+        this.tabOffsetTop = this.$refs.tabControl.$el.offsetTop;
+      }
+    })
+
   },
   methods: {
     tabClick(position){
@@ -80,13 +92,15 @@ export default {
           this.currentType = 'sell';
           break;
       }
-      this.$refs.scrollView.reflushSroll();
+      this.$refs.tabControlFakse.currentIndex = position
+      this.$refs.tabControl.currentIndex = position
     },
     backTopClick() {
       this.$refs.scrollView.scrollTo(0, 0);
     },
     contentScroll(offsetY) {
       this.isShowBackTop = offsetY < (-1000);
+      this.showFakseTabControl = offsetY < (-this.tabOffsetTop)
     },
     loadMore() {
       console.log('加载更多数据');
@@ -132,9 +146,9 @@ export default {
   color: white;
 }
 
-.tab-control {
+.tab_control {
   position: sticky;
-  top: 44px;
+  top: 43px;
   z-index: 9;
 }
 
