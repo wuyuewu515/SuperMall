@@ -24,6 +24,7 @@ export function homeGoodsData(type) {
   })
 }
 
+//构建商品信息
 export function getGoodDetail(iid){
   let goodInfo = {
     goodTitle:'这个是商品的名称，2020年抖音爆款，很牛逼的',
@@ -36,5 +37,22 @@ export function getGoodDetail(iid){
   }
   return new Promise(resolve => {
     resolve(goodInfo);
+  })
+}
+
+//构建商品的详情数据--图片
+export function getGoodDetailImgs(iid){
+  let imgUlr = 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1598852319084&di=40f68fafdf0bc9d49d3cce82fa1975ae&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn10113%2F505%2Fw580h725%2F20190628%2Fc9e2-hyzpvir8533150.jpg';
+  let goodImgs =[];
+  for (let i=0;i<10;i++){
+    goodImgs.push(imgUlr);
+  }
+  let goodDetailImgInfo={
+    descr:'穿着效果，鸡你太美，你太美',
+    list:goodImgs
+  }
+
+  return new Promise(resolve => {
+    resolve(goodDetailImgInfo)
   })
 }

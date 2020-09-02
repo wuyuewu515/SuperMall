@@ -1,6 +1,5 @@
 //首页模块的所有请求
-import {AxiosInstance} from "@/network/base-requet";
-import {getGoodDetail} from "@/common/buildData";
+import {getGoodDetail, getGoodDetailImgs} from "@/common/buildData";
 
 /**
  * 获取商品详情信息
@@ -14,5 +13,11 @@ export function getGoodInfo(iid) {
   //     iid
   //   }
   // })
+
   return getGoodDetail(iid);
+}
+
+//获取商品详情的图片信息
+export function getGoodDetailImg(iid) {
+  return getGoodDetailImgs(iid)
 }
