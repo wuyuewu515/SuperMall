@@ -23,3 +23,18 @@ export function homeGoodsData(type) {
         resolve(dataList);
   })
 }
+
+export function getGoodDetail(iid){
+  let goodInfo = {
+    goodTitle:'这个是商品的名称，2020年抖音爆款，很牛逼的',
+    oldPrice:'998',
+    newPrice:'9.9',
+    discount:'满200减20',
+    sellCount:'销量 20098',
+    collect:'收藏50人',
+    send:'36小时内发货'
+  }
+  return new Promise(resolve => {
+    resolve(goodInfo);
+  })
+}

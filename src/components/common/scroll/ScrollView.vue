@@ -45,6 +45,7 @@ export default {
       this.scroll = new BScroll(this.$refs.wrapper, {
         click: true,
         mouseWheel: true,
+        bounce:false,//当滚动超过边缘的时候无回弹动画
         probeType: this.probeType, //监听滚动
         pullUpLoad: this.pullUpLoad, //是否监听上拉加载更多
       });
@@ -99,6 +100,10 @@ export default {
     closePullUp() {
       this.scroll && this.scroll.closePullUp();
     },
+    //获取当前滚动的距离
+    getSrollY() {
+      return this.scroll ? this.scroll.y : 0
+    }
   },
 
 

@@ -5,6 +5,7 @@ const Home = () =>  import('@/views/home/Home')
 const Profile = () => import("@/views/profile/Profile")
 const Category = () => import("@/views/category/Category")
 const shopCart = () => import("@/views/shopcart/shopCart")
+const detail = () => import("@/views/detail/Detail")
 
 
 //安装插件
@@ -31,6 +32,10 @@ const routes = [
   {
     path: '/shopCart',
     component: shopCart
+  },
+  {
+    path: '/detail/:id',
+    component: detail
   }
 
 ]

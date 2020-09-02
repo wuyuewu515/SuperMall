@@ -1,32 +1,30 @@
 <template>
-  <div id="home" class="wrapper">
+    <div id="home" class="wrapper">
 
-    <nav-bar class="home-nav">
-      <div slot="center">购物中心</div>
-    </nav-bar>
-    <!--  使用一个假的tabbar-->
-    <tabcontrol :class="{tab_control:showFakseTabControl}"
-                ref="tabControlFakse"
-                @tabClick="tabClick"
-                :titles="['流行','新款','精选']"></tabcontrol>
-
-    <scroll-view class="content"
-                 ref="scrollView"
-                 :probe-type="3"
-                 :pull-up-load="true"
-                 @loadMore="loadMore"
-                 @scroll="contentScroll">
-      <recommend-view :recommends="recommends"></recommend-view>
-      <feature-view></feature-view>
-      <tabcontrol ref="tabControl"
+      <nav-bar class="home-nav">
+        <div slot="center">购物中心</div>
+      </nav-bar>
+      <!--  使用一个假的tabbar-->
+      <tabcontrol :class="{tab_control:showFakseTabControl}"
+                  ref="tabControlFakse"
                   @tabClick="tabClick"
                   :titles="['流行','新款','精选']"></tabcontrol>
-      <goods-list :list="goods[currentType].list"></goods-list>
-    </scroll-view>
-    <back-top @click.native="backTopClick" v-show="isShowBackTop"/>
-  </div>
 
-
+      <scroll-view class="content"
+                   ref="scrollView"
+                   :probe-type="3"
+                   :pull-up-load="true"
+                   @loadMore="loadMore"
+                   @scroll="contentScroll">
+        <recommend-view :recommends="recommends"></recommend-view>
+        <feature-view></feature-view>
+        <tabcontrol ref="tabControl"
+                    @tabClick="tabClick"
+                    :titles="['流行','新款','精选']"></tabcontrol>
+        <goods-list :list="goods[currentType].list"></goods-list>
+      </scroll-view>
+      <back-top @click.native="backTopClick" v-show="isShowBackTop"/>
+    </div>
 </template>
 
 <script>
@@ -56,6 +54,7 @@ export default {
       isShowBackTop: false,
       tabOffsetTop: 0,
       showFakseTabControl: false,
+      scrollY: 0,
     }
   },
   components: {
@@ -79,8 +78,23 @@ export default {
     })
 
   },
+  activated() {
+    // console.log(this.scrollY);
+    // if (this.scrollY != 0) {
+    //   //this.$refs.scrollView.reflushSroll();
+    //   this.$refs.scrollView.scrollTo(0, this.scrollY, 0)
+    //   this.isShowBackTop = this.scrollY < (-1000);
+    //   this.showFakseTabControl = this.scrollY < (-this.tabOffsetTop)
+    // }
+  },
+  deactivated() {
+   // this.scrollY = this.$refs.scrollView.getSrollY();
+   // console.log('方法执行了');
+   // this.$refs.scrollView.scroll.stop();
+
+  },
   methods: {
-    tabClick(position){
+    tabClick(position) {
       switch (position) {
         case 0:
           this.currentType = 'pop';
@@ -111,7 +125,6 @@ export default {
       getHomeMultiData().then(result => {
         this.data = result.data;
         this.recommends = result.data.recommend.list;
-        console.log(this.data);
       })
     },
     //获取首页商品数据

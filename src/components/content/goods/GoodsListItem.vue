@@ -1,5 +1,5 @@
 <template >
-  <div class="good-list-item">
+  <div class="good-list-item" @click="goDetail">
     <img :src="goodsItem.imga" @load="imgaLoad">
     <p>{{goodsItem.title}}</p>
     <div class="goods-info">
@@ -24,6 +24,9 @@ export default {
   methods:{
     imgaLoad(){
      // this.$bus.$emit('itemImgLoad');
+    },
+    goDetail(){
+     this.$router.push('/detail/'+'111');
     }
   }
 }
