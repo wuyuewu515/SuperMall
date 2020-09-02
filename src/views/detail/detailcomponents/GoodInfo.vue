@@ -3,7 +3,7 @@
     <p>{{goodInfo.goodTitle}}</p>
     <div>
        <span class="new-price">￥{{goodInfo.newPrice}}</span>
-      <span class="old-price"><strike>￥{{goodInfo.oldPrice}}</strike></span>
+       <span class="old-price"><strike>￥{{goodInfo.oldPrice}}</strike></span>
        <span class="discount">{{goodInfo.discount}}</span>
     </div>
     <div class="bottom">
@@ -57,6 +57,8 @@ export default {
   margin-bottom: 10px;
   margin-left: 10px;
   border-radius: 10px;
+  position: relative;
+  top:-8px;
 }
 .bottom{
   display: flex;
