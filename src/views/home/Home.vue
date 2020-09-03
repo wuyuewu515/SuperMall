@@ -106,6 +106,7 @@ export default {
           this.currentType = 'sell';
           break;
       }
+      this.$refs.scrollView.scrollTo(0, -this.tabOffsetTop);
       this.$refs.tabControlFakse.currentIndex = position
       this.$refs.tabControl.currentIndex = position
     },
