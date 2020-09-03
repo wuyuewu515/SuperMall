@@ -1,5 +1,5 @@
 <template >
-  <div class="good-list-item" @click="goDetail">
+  <div class="good-list-item" @click="goDetail(goodsItem)">
     <img :src="goodsItem.imga" @load="imgaLoad">
     <p>{{goodsItem.title}}</p>
     <div class="goods-info">
@@ -25,8 +25,8 @@ export default {
     imgaLoad(){
      // this.$bus.$emit('itemImgLoad');
     },
-    goDetail(){
-     this.$router.push('/detail/'+'111');
+    goDetail(goodsItem){
+     this.$router.push('/detail/'+goodsItem.iid);
     }
   }
 }

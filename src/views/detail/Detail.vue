@@ -9,7 +9,7 @@
       <good-evaluation ref="goodEvaluation"></good-evaluation>
       <goods-list :list="this.goodRecommond" ref="goodRecommond"></goods-list>
     </scroll-view>
-    <detail-bottom-bar class="bottom-bar"></detail-bottom-bar>
+    <detail-bottom-bar class="bottom-bar" @addCart="addCart"/>
     <back-top @click.native="backTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
@@ -53,6 +53,18 @@ export default {
 
   },
   methods: {
+    addCart() {
+      console.log('addCart');
+      let product = {
+        iid: this.iid,
+        price: this.goodInfo.newPrice,
+        title: this.goodInfo.goodTitle,
+        count: 1,
+      }
+     // this.$store.commit('addCar', product);
+      this.$store.dispatch('addCar',product)
+
+    },
     backTop() {
       this.$refs.srcollView.scrollTo(0, 0);
     },

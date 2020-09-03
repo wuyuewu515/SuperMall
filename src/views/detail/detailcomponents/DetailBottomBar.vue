@@ -15,7 +15,7 @@
       <span>收藏</span>
     </div>
 
-    <div class="shop-car flexStyle">
+    <div class="shop-car flexStyle" @click="addCart">
       <span>加入购物车</span>
     </div>
     <div class="buy flexStyle">
@@ -26,7 +26,12 @@
 
 <script>
 export default {
-  name: "DetailBottomBar"
+  name: "DetailBottomBar",
+  methods:{
+    addCart(){
+      this.$emit('addCart')
+    },
+  }
 }
 </script>
 

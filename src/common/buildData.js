@@ -16,6 +16,7 @@ export function homeGoodsData(type) {
       price:'￥:10'+i,
       collect:'20'+i,
       title: '这个标题内容'+type + '--' + i,
+      iid:type+i+'-iid'
     }
     dataList.push(tempData)
   }
