@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "GoodsList",
+  name: "GoodsListItem",
   props: {
     goodsItem: {
       type: Object,
