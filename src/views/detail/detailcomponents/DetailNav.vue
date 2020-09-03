@@ -33,6 +33,8 @@ export default {
       if (this.currentIndex === position)
         return
       this.currentIndex = position
+
+      this.$emit("navClick",position);
     }
   },
   components: {

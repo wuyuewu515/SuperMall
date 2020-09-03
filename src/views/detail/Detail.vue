@@ -1,13 +1,13 @@
 <template>
   <div id="detail">
-    <detail-nav class="detai-nav"/>
+    <detail-nav class="detai-nav" @navClick="navClick" ref="detailNav"/>
 
     <scroll-view class="content" ref="srcollView" :probe-type="3" @scroll="scroll">
       <good-info :good-info="goodInfo" ref="goodInfo"></good-info>
-      <good-img :good-img-info="goodImgs" ref="goodImg"></good-img>
+      <good-img :good-img-info="goodImgs"></good-img>
       <good-params ref="goodParams"></good-params>
-      <good-evaluation></good-evaluation>
-      <goods-list :list="this.goodRecommond"></goods-list>
+      <good-evaluation ref="goodEvaluation"></good-evaluation>
+      <goods-list :list="this.goodRecommond" ref="goodRecommond"></goods-list>
     </scroll-view>
     <back-top @click.native="backTop" v-show="isShowBackTop"></back-top>
   </div>
@@ -35,15 +35,37 @@ export default {
       goodInfo: {},
       goodImgs: {},
       goodRecommond: [],
-      isShowBackTop: false
+      isShowBackTop: false,
+      offsetYs: [],
+      currentIndex: 0,
     }
+  },
+  updated() {
+    console.log('update')
+    this.offsetYs = [];
+    this.offsetYs.push(0);
+    this.offsetYs.push(this.$refs.goodParams.$el.offsetTop);
+    this.offsetYs.push(this.$refs.goodEvaluation.$el.offsetTop);
+    this.offsetYs.push(this.$refs.goodRecommond.$el.offsetTop);
+    this.offsetYs.push(Number.MAX_VALUE);
+
   },
   methods: {
     backTop() {
       this.$refs.srcollView.scrollTo(0, 0);
     },
     scroll(position) {
+      for (let i = 0; i < this.offsetYs.length - 1; i++) {
+        if (this.currentIndex !== i && (-position) >= this.offsetYs[i] && (-position) < this.offsetYs[i + 1]) {
+          this.currentIndex = i;
+          this.$refs.detailNav.currentIndex = i;
+        }
+      }
       this.isShowBackTop = position < -1000;
+    },
+    navClick(position) {
+
+      this.$refs.srcollView.scrollTo(0, -this.offsetYs[position]);
     }
   },
   activated() {
@@ -58,9 +80,7 @@ export default {
       this.goodImgs = result[1]
       //获取详情的推荐信息
       this.goodRecommond = result[2]
-      console.log(this.$refs.goodInfo.$el.scrollTop);
-      console.log(this.$refs.goodImg.$el.scrollTop);
-      console.log(this.$refs.goodParams.$el.scrollTop);
+
     })
   },
 
@@ -83,6 +103,12 @@ export default {
 }
 
 .content {
-  height: calc(100% - 44px);
+  /*height: calc(100vh - 44px);*/
+  overflow: hidden;
+  position: absolute;
+  top: 44px;
+  bottom: 0px;
+  left: 0;
+  right: 0;
 }
 </style>
