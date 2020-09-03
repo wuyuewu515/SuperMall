@@ -44,7 +44,7 @@ export default {
       //1.初始化scroll
       this.scroll = new BScroll(this.$refs.wrapper, {
         click: true,
-        mouseWheel: true,
+        mouseWheel: false,
         bounce:false,//当滚动超过边缘的时候无回弹动画
         probeType: this.probeType, //监听滚动
         pullUpLoad: this.pullUpLoad, //是否监听上拉加载更多

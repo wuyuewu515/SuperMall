@@ -9,6 +9,7 @@
       <good-evaluation ref="goodEvaluation"></good-evaluation>
       <goods-list :list="this.goodRecommond" ref="goodRecommond"></goods-list>
     </scroll-view>
+    <detail-bottom-bar class="bottom-bar"></detail-bottom-bar>
     <back-top @click.native="backTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
@@ -25,10 +26,11 @@ import GoodParams from "@/views/detail/detailcomponents/GoodParams";
 import GoodEvaluation from "@/views/detail/detailcomponents/GoodEvaluation";
 import GoodsList from "@/components/content/goods/GoodsList";
 import BackTop from "@/components/content/backtop/BackTop";
+import DetailBottomBar from "@/views/detail/detailcomponents/DetailBottomBar";
 
 export default {
   name: "Detail",
-  components: {BackTop, GoodsList, GoodEvaluation, GoodParams, GoodImg, ScrollView, GoodInfo, DetailNav},
+  components: {DetailBottomBar, BackTop, GoodsList, GoodEvaluation, GoodParams, GoodImg, ScrollView, GoodInfo, DetailNav},
   data() {
     return {
       iid: null,
@@ -91,8 +93,8 @@ export default {
 
 #detail {
   height: 100vh;
-  position: relative;
-  z-index: 9;
+  /*position: relative;*/
+  /*z-index: 9;*/
   background: white;
 }
 
@@ -103,12 +105,13 @@ export default {
 }
 
 .content {
-  /*height: calc(100vh - 44px);*/
+  /*height: calc(100vh - 93px);*/
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   top: 44px;
-  bottom: 0px;
+  bottom: 49px;
   left: 0;
   right: 0;
 }
+
 </style>
