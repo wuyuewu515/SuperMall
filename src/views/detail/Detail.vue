@@ -43,18 +43,15 @@ export default {
     }
   },
   updated() {
-    console.log('update')
     this.offsetYs = [];
     this.offsetYs.push(0);
     this.offsetYs.push(this.$refs.goodParams.$el.offsetTop);
     this.offsetYs.push(this.$refs.goodEvaluation.$el.offsetTop);
     this.offsetYs.push(this.$refs.goodRecommond.$el.offsetTop);
     this.offsetYs.push(Number.MAX_VALUE);
-
   },
   methods: {
     addCart() {
-      console.log('addCart');
       let product = {
         iid: this.iid,
         price: this.goodInfo.newPrice,
