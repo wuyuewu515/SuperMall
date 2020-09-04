@@ -52,9 +52,9 @@ export default {
       },
       currentType: 'pop',
       isShowBackTop: false,
-      tabOffsetTop: 0,
+      tabOffsetTop: 0, //tab选项距离顶部的距离
       showFakseTabControl: false,
-      scrollY: 0,
+      scrollY: 0, //scrollView滚动的距离
     }
   },
   components: {
@@ -88,8 +88,8 @@ export default {
     // }
   },
   deactivated() {
-   // this.scrollY = this.$refs.scrollView.getSrollY();
-   // console.log('方法执行了');
+
+    // console.log('方法执行了');
    // this.$refs.scrollView.scroll.stop();
 
   },
@@ -106,7 +106,9 @@ export default {
           this.currentType = 'sell';
           break;
       }
-      this.$refs.scrollView.scrollTo(0, -this.tabOffsetTop);
+      if (this.scrollY > this.tabOffsetTop) {
+        this.$refs.scrollView.scrollTo(0, -this.tabOffsetTop);
+      }
       this.$refs.tabControlFakse.currentIndex = position
       this.$refs.tabControl.currentIndex = position
     },
@@ -114,8 +116,9 @@ export default {
       this.$refs.scrollView.scrollTo(0, 0);
     },
     contentScroll(offsetY) {
+      this.scrollY = -offsetY
       this.isShowBackTop = offsetY < (-1000);
-      this.showFakseTabControl = offsetY < (-this.tabOffsetTop)
+      this.showFakseTabControl = offsetY <= (-this.tabOffsetTop)
     },
     loadMore() {
       console.log('加载更多数据');
