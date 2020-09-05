@@ -11,7 +11,6 @@
     </scroll-view>
     <detail-bottom-bar class="bottom-bar" @addCart="addCart"/>
     <back-top @click.native="backTop" v-show="isShowBackTop"></back-top>
-    <toast message="加载中..."/>
   </div>
 </template>
 
@@ -29,12 +28,10 @@ import GoodEvaluation from "@/views/detail/detailcomponents/GoodEvaluation";
 import GoodsList from "@/components/content/goods/GoodsList";
 import BackTop from "@/components/content/backtop/BackTop";
 import DetailBottomBar from "@/views/detail/detailcomponents/DetailBottomBar";
-import Toast from "@/components/common/toast/Toast";
 
 export default {
   name: "Detail",
   components: {
-    Toast,
     DetailBottomBar, BackTop, GoodsList, GoodEvaluation, GoodParams, GoodImg, ScrollView, GoodInfo, DetailNav},
   data() {
     return {
@@ -73,6 +70,7 @@ export default {
      //  })
       this.addToCar(product).then(result=>{
         console.log(result);
+        this.$toast.show(result);
       })
 
     },

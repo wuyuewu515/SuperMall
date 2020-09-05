@@ -12,6 +12,7 @@ export default {
         resolve('添加购物车成功');
       } else {
         context.commit(ADD_COUNTER, tempProduct)
+        resolve('数量+1');
 
       }
     })

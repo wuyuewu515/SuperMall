@@ -1,5 +1,5 @@
 <template>
-  <div class="toast">
+  <div class="toast" v-if="isShow">
     <span class="mssage-style">{{ message }}</span>
   </div>
 </template>
@@ -8,9 +8,26 @@
 export default {
   name: "Toast",
   props: {
-    message: {
-      type: String,
-      default:'',
+    // message: {
+    //   type: String,
+    //   default:'',
+    // }
+  },
+  data() {
+    return {
+      message: '',
+      isShow: false,
+      timeOut:null,
+    }
+  },
+  methods: {
+    show(message, duration = 1500) {
+      this.isShow = true;
+      this.message = message;
+       setTimeout(()=>{
+        this.isShow = false;
+      }, duration);
+
     }
   }
 }
@@ -31,7 +48,7 @@ export default {
   justify-content: center;
 }
 
-.mssage-style{
+.mssage-style {
   color: white;
   padding: 8px 10px;
 }
