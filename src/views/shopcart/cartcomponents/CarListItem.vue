@@ -2,12 +2,12 @@
   <div class="cart-list-item">
       <div class="title">
         <span>{{product.title}}</span>
-        <span>价格：{{product.price}}</span>
+        <span class="priceStyle">价格：{{product.price}}</span>
       </div>
 
     <div class="idd">
         <span>{{product.iid}}</span>
-        <span>数量：{{product.count}}</span>
+        <span class="countStyle">数量：{{product.count}}</span>
       </div>
 
   </div>
@@ -37,6 +37,11 @@ export default {
 .cart-list-item span{
   min-width: 30%;
 }
+
+.priceStyle,.countStyle{
+  text-align: center;
+}
+
 .title, .idd{
   margin-bottom: 10px;
   width: 100%;

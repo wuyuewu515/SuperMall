@@ -6,7 +6,7 @@
     <scroll-view class="content" ref="srcollView">
       <car-list></car-list>
     </scroll-view>
-
+    <car-bottom class="car-bottom"></car-bottom>
   </div>
 </template>
 
@@ -16,10 +16,11 @@ import NavBar from "@/components/common/navbar/NavBar";
 import {mapGetters} from 'vuex'
 import CarList from "@/views/shopcart/cartcomponents/CarList";
 import ScrollView from "@/components/common/scroll/ScrollView";
+import CarBottom from "@/views/shopcart/cartcomponents/CarBottom";
 
 export default {
   name: "shopCar",
-  components: {ScrollView, CarList, NavBar},
+  components: {CarBottom, ScrollView, CarList, NavBar},
   computed: {
     ...mapGetters(['getCarLength', 'getCarList'])
   },updated() {
@@ -34,7 +35,7 @@ export default {
   /*position: relative;*/
 }
 .content{
-  height: calc(100vh - 93px);
+  height: calc(100vh - 143px);
   overflow: hidden;
   /*position: absolute;*/
   /*top: 44px;*/
@@ -46,6 +47,8 @@ export default {
 .nav-bar {
   background: var(--color-tint);
   color: white;
+}
+.car-bottom{
 
 }
 </style>

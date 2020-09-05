@@ -17,6 +17,7 @@
 <script>
 import {getGoodDetailImg, getGoodInfo} from "@/network/detail-requet";
 import {getHomeGoodsData} from "@/network/home-requet";
+import {mapActions} from "vuex"
 
 import DetailNav from "@/views/detail/detailcomponents/DetailNav";
 import GoodInfo from "@/views/detail/detailcomponents/GoodInfo";
@@ -51,6 +52,10 @@ export default {
     this.offsetYs.push(Number.MAX_VALUE);
   },
   methods: {
+
+    ...mapActions({
+      addToCar:'addCar',
+    }),
     addCart() {
       let product = {
         iid: this.iid,
@@ -59,7 +64,12 @@ export default {
         count: 1,
       }
      // this.$store.commit('addCar', product);
-      this.$store.dispatch('addCar',product)
+     //  this.$store.dispatch('addCar',product).then(result=>{
+     //    console.log(result);
+     //  })
+      this.addToCar(product).then(result=>{
+        console.log(result);
+      })
 
     },
     backTop() {
